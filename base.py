@@ -17,13 +17,15 @@ class BaseAtlasClient:
     def __del__(self):
         self._session.close()
 
-    def _handle_response(self, response: requests.Response) -> Optional[Union[List[dict], Dict[str, Any]]]:
+    @staticmethod
+    def _handle_response(response: requests.Response) -> Optional[Union[List[dict], Dict[str, Any]]]:
         """Returns successful response JSON body or prints unsuccessful response HTTP result."""
         if 200 <= response.status_code < 300:
             return response.json()
         print(response.status_code, response.reason, response.url)
 
-    def _parse_href(self, href: str) -> Tuple[str, Dict[str, List[Any]]]:
+    @staticmethod
+    def _parse_href(href: str) -> Tuple[str, Dict[str, List[Any]]]:
         """Breaks a full URL into separate base URL string and query parameters dictionary."""
         u = urllib.parse.urlparse(href)
         url = urllib.parse.urlunparse((u.scheme, u.netloc, u.path, u.params, '', u.fragment))
