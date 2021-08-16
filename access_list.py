@@ -1,4 +1,6 @@
 
+from urllib.parse import quote_plus
+
 import requests
 
 from base import BaseAtlasClient
@@ -41,7 +43,7 @@ class AccessListClient(BaseAtlasClient):
             query_params = {}
         url = self._base_url.format(
             self._endpoints.get("get_entry").format(
-                self.group_id, entry_id.replace("/", "%2F")
+                self.group_id, quote_plus(entry_id)
             )
         )
         return self._request(requests.Request("GET", url, params=query_params))
@@ -63,7 +65,7 @@ class AccessListClient(BaseAtlasClient):
             query_params = {}
         url = self._base_url.format(
             self._endpoints.get("delete_entry").format(
-                self.group_id, entry_id.replace("/", "%2F")
+                self.group_id, quote_plus(entry_id)
             )
         )
         return self._request(requests.Request("DELETE", url, params=query_params))
