@@ -1,10 +1,16 @@
-# TODO: url encode / escape entry_id
-
-from typing import List, Union
 
 import requests
 
 from base import BaseAtlasClient
+
+
+class AccessListEntry():
+    def __init__(self):
+        self.ip_address = None
+        self.cidr_block = None
+        self.aws_security_group = None
+        self.comment = None
+        self.delete_after_date = None
 
 
 class AccessListClient(BaseAtlasClient):
@@ -35,7 +41,7 @@ class AccessListClient(BaseAtlasClient):
             query_params = {}
         url = self._base_url.format(
             self._endpoints.get("get_entry").format(
-                self.group_id, entry_id
+                self.group_id, entry_id.replace("/", "%2F")
             )
         )
         return self._request(requests.Request("GET", url, params=query_params))
@@ -51,13 +57,13 @@ class AccessListClient(BaseAtlasClient):
         )
         return self._request(requests.Request("POST", url, params=query_params, json=body_params), expect_list=True)
 
-    def delete_entry(self, query_params: dict = None):
+    def delete_entry(self, entry_id: str, query_params: dict = None):
         """."""
         if query_params is None:
             query_params = {}
         url = self._base_url.format(
             self._endpoints.get("delete_entry").format(
-                self.group_id
+                self.group_id, entry_id.replace("/", "%2F")
             )
         )
         return self._request(requests.Request("DELETE", url, params=query_params))
