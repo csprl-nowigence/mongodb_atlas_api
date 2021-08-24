@@ -34,7 +34,7 @@ class BaseAtlasClient:
         return url, query_params
 
     def _request(
-            self, request: requests.Request, expect_list: bool = False
+            self, request: requests.Request, expect_list: bool = False, expect_download: bool = False
     ) -> Union[List[Dict[str, Any]], Dict[str, Any]]:
         """Sends request, returns successful response body (None if unsuccessful). De-paginates lists if applicable."""
         if expect_list:
