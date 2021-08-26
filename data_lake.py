@@ -14,9 +14,8 @@ class DataLakeClient(BaseAtlasClient):
         "delete_datalake": "/groups/{}/dataLakes/{}",
     }
 
-    def __init__(self, public_key: str, private_key: str, group_id: str, cluster_name: str):
+    def __init__(self, public_key: str, private_key: str, group_id: str):
         super().__init__(public_key, private_key, group_id)
-        self.cluster_name = cluster_name
 
     def get_all_datalakes(self, query_params: dict = None):
         """Get all Atlas Data Lakes for the current project."""
