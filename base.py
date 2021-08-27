@@ -24,6 +24,8 @@ class BaseAtlasClient:
         if 200 <= response.status_code < 300:
             return response.json()
         print(response.status_code, response.reason, response.url)
+        if response.json().get("detail"):
+            print(response.json().get("detail"))
 
     @staticmethod
     def _parse_href(href: str) -> Tuple[str, Dict[str, List[Any]]]:
