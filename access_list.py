@@ -48,7 +48,7 @@ class AccessListClient(BaseAtlasClient):
         )
         return self._request(requests.Request("GET", url, params=query_params))
 
-    def add_entries(self, body_params: dict, query_params: dict = None):
+    def add_entries(self, body_params: [dict], query_params: dict = None):
         """Add one or more access list entries to the project."""
         if query_params is None:
             query_params = {}
